@@ -1,0 +1,8 @@
+## Interface: 30400
+## Title: Fals_DisenchantWindow
+## Author: Fal
+## Version: 0.1.0
+## SavedVariables: DisenchantDB
+
+embeds.xml
+main.lua
