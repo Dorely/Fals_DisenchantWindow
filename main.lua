@@ -7,7 +7,10 @@
 
 local disenchantWindow = CreateFrame("Frame",nil,UIParent)
 
+--this integrates with the Ace Library, which adds certain functions for managing flow and state
 local addon = LibStub("AceAddon-3.0"):NewAddon("Disenchant", "AceConsole-3.0")
+
+--this adds the minimap button
 local disenchantLDB = LibStub("LibDataBroker-1.1"):NewDataObject("Disenchant", {
     type = "data source",
     text = "Disenchant",
@@ -19,6 +22,7 @@ local disenchantLDB = LibStub("LibDataBroker-1.1"):NewDataObject("Disenchant", {
 
 local icon = LibStub("LibDBIcon-1.0")
 
+--code that runs to initialize the addon
 function addon:OnInitialize()
     self.db = LibStub("AceDB-3.0"):New("DisenchantDB", { profile = { minimap = { hide = false, }, }, }) 
     icon:Register("Disenchant", disenchantLDB, self.db.profile.minimap) 
@@ -26,6 +30,7 @@ function addon:OnInitialize()
     addon:CreateDisenchantFrame()
 end
 
+--function to show/hide the minimap button that is called by chat command
 function addon:ShowHide() 
     self.db.profile.minimap.hide = not self.db.profile.minimap.hide 
     if self.db.profile.minimap.hide 
@@ -36,6 +41,7 @@ function addon:ShowHide()
     end 
 end
 
+--function to show/hide the main window, called when the minimap button is pressed
 function addon:ShowHideWindow()
     if disenchantWindow:IsShown()
     then 
@@ -47,9 +53,10 @@ function addon:ShowHideWindow()
     end
 end
 
+--register and define the window, then stored for access in the disenchantWindow variable
 function addon:CreateDisenchantFrame()
-    local lwin = LibStub("LibWindow-1.1") 
-    -- myframe = CreateFrame("Frame") 
+    --integrating with the LibWindow library makes it easy to have the window be moveable
+    local lwin = LibStub("LibWindow-1.1")
     disenchantWindow = CreateFrame("Frame",nil,UIParent)
     lwin.RegisterConfig(disenchantWindow, self.db.profile) 
     lwin.MakeDraggable (disenchantWindow)
